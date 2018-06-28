@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fetchDoctorWisePatientVisiteDetails" language="groovy" pageWidth="950" pageHeight="842" columnWidth="910" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="be95a795-7085-4250-b145-88544b1fee7d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<parameter name="visiteFromDate" class="java.util.Date"/>
+	<parameter name="visiteToDate" class="java.util.Date"/>
+	<parameter name="orgId" class="java.lang.Integer"/>
+	<parameter name="orgGroupId" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT PVT.PATIENT_VISIT_ID, PVT.VISIT_DT, PIR.PATIENT_ID, PVT.HOS_PATIENT_ID, PIR.FIRST_NM PATIENTNM, PIR.BIRTH_DT, PIR.GENDER, PIR.MARITAL_STATUS, EMP.FIRST_NM DOCTORNM
+FROM OPD.PATIENT_VISIT_TRANS PVT JOIN PATIENT_INFO_REF PIR ON PIR.PATIENT_ID = PVT.PATIENT_ID JOIN PUBLIC.EMPLOYEES_INFO_REF EMP ON EMP.EMP_ID = PVT.DOCTOR_ID
+WHERE PVT.VISIT_DT BETWEEN $P{visiteFromDate} AND $P{visiteToDate} AND PVT.ORG_ID =$P{orgId} AND PVT.ORG_GRP_ID=$P{orgGroupId} AND PVT.ISACTIVE=TRUE ORDER BY PVT.VISIT_DT]]>
+	</queryString>
+	<field name="patient_visit_id" class="java.lang.Long"/>
+	<field name="visit_dt" class="java.sql.Timestamp"/>
+	<field name="patient_id" class="java.lang.Long"/>
+	<field name="hos_patient_id" class="java.lang.String"/>
+	<field name="patientnm" class="java.lang.String"/>
+	<field name="birth_dt" class="java.sql.Date"/>
+	<field name="gender" class="java.lang.String"/>
+	<field name="marital_status" class="java.lang.String"/>
+	<field name="doctornm" class="java.lang.String"/>
+	<group name="doctor_wise_visit_details">
+		<groupExpression><![CDATA[$F{doctornm}]]></groupExpression>
+		<groupHeader>
+			<band height="48">
+				<staticText>
+					<reportElement x="0" y="0" width="113" height="20" uuid="e82bee85-4bf7-41c0-887a-1749e3afe3f4"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Doctor Name : ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="113" y="0" width="797" height="20" uuid="2f31cbf2-2afb-47a8-8f36-479c509b9c27"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{doctornm}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="277" y="23" width="164" height="25" uuid="4cc2ffab-2b28-40f7-abe0-4939d402bfb4"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Visit Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="113" y="23" width="164" height="25" uuid="247e3863-e63b-4c5b-9695-7ac4ab39533e"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Hospital Patient ID]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="441" y="23" width="227" height="25" uuid="2d97c2dd-2f1b-4dc9-aaa8-91771b0e246e"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Patient Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="668" y="23" width="100" height="25" uuid="849b5f30-854c-428e-8aeb-9c7d1311efb2"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Gender]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="770" y="23" width="111" height="25" uuid="edeb5469-d82d-4441-ad3c-4f9d62ab09df"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Marital Status]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="910" height="30" uuid="c15fa683-e746-4cbc-bdee-21fb2dfe1dc5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<text><![CDATA[Doctor wise Patient visit details]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50"/>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="true">
+				<reportElement x="277" y="0" width="164" height="25" uuid="e5ee9e3f-a238-48ef-a7d8-8a9b2a1a094f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{visit_dt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="113" y="0" width="164" height="25" uuid="18496c1f-0e42-4f35-bfc9-375c4aa273bb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hos_patient_id}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="441" y="0" width="227" height="25" uuid="18d9c0a6-8c83-4fa2-88b2-2be077a3c556"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{patientnm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="668" y="0" width="100" height="25" uuid="af90061b-f085-495c-9813-60723a211e63"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="768" y="0" width="111" height="25" uuid="423202a3-d0be-4110-89c0-4b8a73313021"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{marital_status}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="409" y="0" width="80" height="20" uuid="3d26a587-e6d1-46ae-a9f0-d6a7c4530cd2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="489" y="0" width="40" height="20" uuid="a1c9482a-1817-4baa-8e1e-825970b2f01d"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="735" y="0" width="43" height="20" uuid="35142b79-4683-4a18-8a93-348116c3ac96"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="778" y="0" width="132" height="20" uuid="5cb934c4-8aa9-4af6-aca0-6c07300424e1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-09-09T12:11:41 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fetchPatientVisiteDetails" language="groovy" pageWidth="950" pageHeight="842" columnWidth="910" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="050b6dce-c13e-4ea0-b41e-59f968156a89">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="183"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<parameter name="visiteFromDate" class="java.util.Date"/>
+	<parameter name="visiteToDate" class="java.util.Date"/>
+	<parameter name="orgId" class="java.lang.Integer"/>
+	<parameter name="orgGroupId" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT PVT.PATIENT_VISIT_ID, PVT.VISIT_DT, PIR.PATIENT_ID, PVT.HOS_PATIENT_ID, PIR.FIRST_NM PATIENTNM, PIR.BIRTH_DT, PIR.GENDER, PIR.MARITAL_STATUS, EMP.FIRST_NM DOCTORNM
+FROM OPD.PATIENT_VISIT_TRANS PVT JOIN PATIENT_INFO_REF PIR ON PIR.PATIENT_ID = PVT.PATIENT_ID JOIN PUBLIC.EMPLOYEES_INFO_REF EMP ON EMP.EMP_ID = PVT.DOCTOR_ID
+WHERE cast(PVT.VISIT_DT as date) BETWEEN $P{visiteFromDate} AND $P{visiteToDate} AND PVT.ORG_ID =$P{orgId} AND PVT.ORG_GRP_ID=$P{orgGroupId} AND PVT.ISACTIVE=TRUE ORDER BY PVT.VISIT_DT]]>
+	</queryString>
+	<field name="patient_visit_id" class="java.lang.Long"/>
+	<field name="visit_dt" class="java.sql.Timestamp"/>
+	<field name="patient_id" class="java.lang.Long"/>
+	<field name="hos_patient_id" class="java.lang.String"/>
+	<field name="patientnm" class="java.lang.String"/>
+	<field name="birth_dt" class="java.sql.Date"/>
+	<field name="gender" class="java.lang.String"/>
+	<field name="marital_status" class="java.lang.String"/>
+	<field name="doctornm" class="java.lang.String"/>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="30">
+			<staticText>
+				<reportElement x="0" y="0" width="910" height="30" uuid="2b171e8f-2459-473f-91cb-f31484f188d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Patient Visit Details]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="137" height="25" uuid="3aa1a608-c41b-48d4-ba0d-079ef4a63fd9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Patient Visit ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="0" width="147" height="25" uuid="bfe64a5d-e307-4611-b854-a259c42fb814"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Visit Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="0" width="143" height="25" uuid="992f7bc3-27e6-4821-a2c3-ff5a31bc6bad"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Hospital Patient ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="0" width="148" height="25" uuid="025d2cf3-5cc5-48e0-94ed-b149a86f479b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Patient Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="575" y="0" width="100" height="25" uuid="1ad17a74-c13c-4614-bfb1-b40013ce4461"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Gender]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="675" y="0" width="100" height="25" uuid="07b272ff-44ab-47c6-8dfd-cc38541665df"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Marital Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="775" y="0" width="135" height="25" uuid="0b19b2b8-5fb7-46d6-8502-4f219f4467ee"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Doctor Name]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="137" height="25" uuid="1fd3318b-0967-42ed-98b4-f21f213d0cc4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{patient_visit_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="true">
+				<reportElement x="137" y="0" width="147" height="25" uuid="796c41ce-6d66-412b-a115-5eefefb017c2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{visit_dt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="284" y="0" width="143" height="25" uuid="ce2db698-8221-46ff-ab0c-c8836d9a15c3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hos_patient_id}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="427" y="0" width="148" height="25" uuid="9ba90907-dba0-4017-9dfc-1cf918a469e4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{patientnm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="575" y="0" width="100" height="25" uuid="f0ede024-9992-402b-af80-3c6b4f613f45"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="675" y="0" width="100" height="25" uuid="169b8be0-dc8c-440f-b301-be0588699c16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{marital_status}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="775" y="0" width="135" height="25" uuid="8ab38116-32e2-43b1-953b-ac14d855e1a4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{doctornm}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="347" y="0" width="80" height="20" uuid="5b41ecb9-3394-4eca-87c9-459f85ec0a05"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="427" y="0" width="40" height="20" uuid="a67a3009-c358-4a26-9ee1-8cd6f9d74db7"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="697" y="0" width="38" height="20" uuid="0a0af44b-f899-4778-806f-0642c3a89d08"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="735" y="0" width="125" height="20" uuid="c34ff096-843e-4557-961e-f193faaa308c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

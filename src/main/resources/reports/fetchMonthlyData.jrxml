@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fetchMonthlyData" language="groovy" pageWidth="900" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="b182deb8-1ee5-4770-926a-2e28390573cd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="89"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<parameter name="month1" class="java.lang.String"/>
+	<parameter name="month2" class="java.lang.String"/>
+	<parameter name="month3" class="java.lang.String"/>
+	<field name="indicatorName" class="java.lang.String"/>
+	<field name="totalSummaryAmt" class="java.math.BigDecimal"/>
+	<field name="totalSummaryAmt1" class="java.math.BigDecimal"/>
+	<field name="totalSummaryAmt2" class="java.math.BigDecimal"/>
+	<field name="month" class="java.lang.String"/>
+	<field name="beanCollectionDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="860" height="35" uuid="a26c729f-572b-4705-8b68-02b0b468db63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Indicator Details]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="422" height="20" uuid="d74e533b-b7e0-4586-9cce-7a18c154346a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Indicator Name]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="422" y="0" width="135" height="20" uuid="ee4e5f60-2df9-466e-89d4-44a9de4d88cf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{month1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="573" y="0" width="130" height="20" uuid="1859adb1-c8c3-4d9a-ad5e-8407b6d7e2b8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{month2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="717" y="0" width="143" height="20" uuid="9dc6f2f8-ecd5-49b7-863f-3db159b13d87"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{month3}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="422" y="0" width="135" height="20" uuid="6e126ec3-51a7-4687-9ccf-0f1e5da9c17b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalSummaryAmt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="573" y="0" width="130" height="20" uuid="0c277223-182c-400b-a895-228048d641f4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalSummaryAmt1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="717" y="0" width="143" height="20" uuid="24e92219-04b3-4aad-9d2c-5ca40dfd11d9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalSummaryAmt2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="422" height="20" uuid="40dc776c-1973-4e69-84d4-75488e013ab7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{indicatorName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="317" y="0" width="80" height="20" uuid="0eb297f1-2e9c-44d7-9b39-9f6170a0f169"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="397" y="0" width="40" height="20" uuid="7d9a7312-01dc-4d8d-ab5e-4a0f7c8a435d"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="622" y="0" width="45" height="20" uuid="5270e1e4-296b-4e4c-a7d3-1b2c45ec5131"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="667" y="0" width="143" height="20" uuid="8aea6175-19ad-4453-a3f6-99daa999fb9e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

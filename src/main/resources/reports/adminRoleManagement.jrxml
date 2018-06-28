@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="adminRoleManagement" language="groovy" pageWidth="950" pageHeight="842" columnWidth="910" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="794001c7-1b05-4891-8361-3163170c640f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<parameter name="moduleId" class="java.lang.Integer"/>
+	<parameter name="orgId" class="java.lang.Integer"/>
+	<parameter name="orgGroupId" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT MR.MOD_ID mod_id,MR.MOD_NM,RR.ROLE_ID,RR.ROLE_NM role_nm, SR.SCREEN_NM se_nm,RSX.PRIVILEGE_ID PID, 'SCREEN' screen_emp_ind
+FROM MODULES_REF MR
+JOIN ROLES_REF RR ON RR.MOD_ID = MR.MOD_ID AND RR.ISACTIVE=TRUE
+JOIN SCREENS_REF SR ON SR.MOD_ID = MR.MOD_ID AND SR.ISACTIVE=TRUE
+JOIN ROLE_SCREEN_XREF RSX ON RSX.SCREEN_ID = SR.SCREEN_ID AND RSX.ROLE_ID = RR.ROLE_ID AND RSX.ISACTIVE=TRUE
+--JOIN EMPLOYEE_ROLE_XREF ERX ON ERX.ROLE_ID = RSX.ROLE_ID AND ERX.MOD_ID = RR.MOD_ID AND ERX.ISACTIVE=TRUE
+--JOIN EMPLOYEES_INFO_REF EIR ON EIR.EMP_ID=ERX.EMP_ID
+WHERE MR.MOD_ID=$P{moduleId} AND MR.ISACTIVE=TRUE AND RR.ORG_ID=$P{orgId} AND RR.ORG_GRP_ID=$P{orgGroupId}
+UNION
+SELECT MR.MOD_ID mod_id,MR.MOD_NM,RR.ROLE_ID,RR.ROLE_NM role_nm,EIR.EMP_USER_NM se_nm, NULL PID, 'EMPLOYEE' screen_emp_ind
+FROM MODULES_REF MR
+JOIN ROLES_REF RR ON RR.MOD_ID = MR.MOD_ID AND RR.ISACTIVE=TRUE
+--JOIN SCREENS_REF SR ON SR.MOD_ID = MR.MOD_ID AND SR.ISACTIVE=TRUE
+--JOIN ROLE_SCREEN_XREF RSX ON RSX.SCREEN_ID = SR.SCREEN_ID AND RSX.ROLE_ID = RR.ROLE_ID AND RSX.ISACTIVE=TRUE
+JOIN EMPLOYEE_ROLE_XREF ERX ON ERX.ROLE_ID = RR.ROLE_ID AND ERX.MOD_ID = RR.MOD_ID AND ERX.ISACTIVE=TRUE
+JOIN EMPLOYEES_INFO_REF EIR ON EIR.EMP_ID=ERX.EMP_ID
+WHERE MR.MOD_ID=$P{moduleId} AND MR.ISACTIVE=TRUE AND RR.ORG_ID=$P{orgId} AND RR.ORG_GRP_ID=$P{orgGroupId} order by mod_id, role_nm,screen_emp_ind desc, se_nm]]>
+	</queryString>
+	<field name="mod_id" class="java.lang.Integer"/>
+	<field name="mod_nm" class="java.lang.String"/>
+	<field name="role_id" class="java.lang.Integer"/>
+	<field name="role_nm" class="java.lang.String"/>
+	<field name="se_nm" class="java.lang.String"/>
+	<field name="pid" class="java.lang.Integer"/>
+	<field name="screen_emp_ind" class="java.lang.String"/>
+	<group name="group_admin">
+		<groupExpression><![CDATA[$F{mod_nm}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="115" height="20" uuid="bb5effe2-2d9d-44c2-9568-2e3dcebf3765"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Module Name:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="115" y="0" width="645" height="20" uuid="4c533e78-57aa-4246-86ff-1e354f7c7e88"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mod_nm}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="role_group" isStartNewColumn="true">
+		<groupExpression><![CDATA[$F{role_nm}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="115" height="20" uuid="36201358-db00-4c8e-bf3e-2764c9f34c68"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Role Name : ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="115" y="0" width="645" height="20" uuid="f4ca8c6d-3d4a-44e4-9d5c-6240a7b0d6db"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{role_nm}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="screen_group">
+		<groupExpression><![CDATA[$F{mod_id}]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<staticText>
+					<reportElement x="241" y="0" width="100" height="17" uuid="03faab8f-47ae-46ac-86d3-87d03781ec6a"/>
+					<textElement>
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Previlege]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="760" height="35" uuid="2c449897-ac3b-4d15-9e2f-4e61b7e5a64a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Admin Wise Role Management]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="115" y="0" width="110" height="18" uuid="7ba0f5e5-c9ec-4f33-a1d0-8646a1322abc"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    ($F{screen_emp_ind}=='SCREEN') ?
+    $F{se_nm}:' '
+
+)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="241" y="0" width="100" height="18" uuid="fa0389ef-e947-42c5-982d-038d018cbedd"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    ($F{pid}==1) ?
+    "Read" :
+   ($F{pid}==2)?
+    "Write" :
+	($F{pid}==3)?
+    "All" :' '
+)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="105" height="18" uuid="b0973ba3-69ac-4a06-bf05-a5df23de054c"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    ($F{screen_emp_ind}=='SCREEN') ?
+    "Screen Names :":' '
+
+)]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18">
+			<textField>
+				<reportElement x="115" y="0" width="110" height="18" uuid="98f1d6c3-78fc-4bbb-acac-b2d15e89e217"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    ($F{screen_emp_ind}=='EMPLOYEE') ?
+     $F{se_nm}:' '
+
+)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="115" height="18" uuid="a21d2883-5624-4b2b-9e50-4cbc29df05ae"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    ($F{screen_emp_ind}=='EMPLOYEE') ?
+    "Employee Names :":' '
+
+)]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="351" y="0" width="80" height="20" uuid="480102bb-210e-4e5d-8d88-8529866727b8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="431" y="0" width="40" height="20" uuid="e6c46e64-1fdb-45d3-8876-2cfab5ddb746"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="582" y="0" width="53" height="20" uuid="68f3490e-8c34-47db-a142-70da27e133a0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="635" y="0" width="110" height="20" uuid="c19238ec-2f7a-4f53-b81f-ea8567af9f4d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

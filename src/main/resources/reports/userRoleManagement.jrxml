@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="userRoleManagement" language="groovy" pageWidth="800" pageHeight="842" columnWidth="760" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dd21ca5a-23a4-4a08-8653-456f93d8499d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<parameter name="employeeId" class="java.lang.Long"/>
+	<parameter name="orgId" class="java.lang.Integer"/>
+	<parameter name="orgGroupId" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT MR.MOD_ID,MR.MOD_NM,RR.ROLE_ID,RR.ROLE_NM,SR.SCREEN_ID,SR.SCREEN_NM,RSX.PRIVILEGE_ID,
+ERX.EMP_ROLE_ID,ERX.ISACTIVE,EIR.EMP_ID,EIR.EMP_USER_NM,EIR.EMP_CODE
+FROM MODULES_REF MR
+JOIN ROLES_REF RR ON RR.MOD_ID = MR.MOD_ID AND RR.ISACTIVE=TRUE
+JOIN SCREENS_REF SR ON SR.MOD_ID = MR.MOD_ID AND SR.ISACTIVE=TRUE
+JOIN ROLE_SCREEN_XREF RSX ON RSX.SCREEN_ID =  SR.SCREEN_ID AND RSX.ROLE_ID = RR.ROLE_ID  AND RSX.ISACTIVE=TRUE
+JOIN EMPLOYEE_ROLE_XREF ERX ON ERX.ROLE_ID = RSX.ROLE_ID AND ERX.MOD_ID = RR.MOD_ID AND ERX.ISACTIVE=TRUE
+JOIN EMPLOYEES_INFO_REF EIR ON EIR.EMP_ID=ERX.EMP_ID
+WHERE EIR.EMP_ID=$P{employeeId} AND MR.ISACTIVE=TRUE AND RR.ORG_ID=$P{orgId} AND RR.ORG_GRP_ID=$P{orgGroupId} order by MR.MOD_NM,RR.ROLE_NM]]>
+	</queryString>
+	<field name="mod_id" class="java.lang.Integer"/>
+	<field name="mod_nm" class="java.lang.String"/>
+	<field name="role_id" class="java.lang.Integer"/>
+	<field name="role_nm" class="java.lang.String"/>
+	<field name="screen_id" class="java.lang.Integer"/>
+	<field name="screen_nm" class="java.lang.String"/>
+	<field name="privilege_id" class="java.lang.Integer"/>
+	<field name="emp_role_id" class="java.lang.Long"/>
+	<field name="isactive" class="java.lang.Boolean"/>
+	<field name="emp_id" class="java.lang.Long"/>
+	<field name="emp_user_nm" class="java.lang.String"/>
+	<field name="emp_code" class="java.lang.String"/>
+	<group name="emp_group_id">
+		<groupExpression><![CDATA[$F{emp_id}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField isBlankWhenNull="true">
+					<reportElement x="160" y="0" width="355" height="20" uuid="63bac44d-aead-4f78-b9f1-34295e758586"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emp_user_nm}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="160" height="20" uuid="aacc0443-ace7-446b-b7f8-2bd4948ae0ce"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Employee User Name :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="515" y="0" width="121" height="20" uuid="9b155344-8d00-4e72-b3f8-2d506e2c2e51"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Employee Code : ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="636" y="0" width="124" height="20" uuid="20a383dd-6b67-4d6d-b341-06ed358fc575"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emp_code}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="76" y="30" width="122" height="20" uuid="b1aad0cd-7d6f-4f0e-8aa8-51c0bec95d30"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Module Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="247" y="30" width="106" height="20" uuid="00058f85-2306-4607-b425-641a1bb2e7cf"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Role Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="398" y="30" width="136" height="20" uuid="eb08cc68-6db2-4463-a88a-6c003fc7c03e"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Screen Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="573" y="30" width="100" height="20" uuid="4c7a4d6d-8dac-47a6-859f-9db04a2ae7e3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true" pdfFontName="Times-Bold"/>
+					</textElement>
+					<text><![CDATA[Privilege]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="760" height="35" uuid="a97dd5df-3e57-46e2-9fb2-3f2216a11653"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<text><![CDATA[User Wise Role Management]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="76" y="0" width="122" height="20" uuid="e20f852d-f85b-4cbc-9e82-46e6569be2e7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mod_nm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="247" y="0" width="106" height="20" uuid="5d498cd7-09e0-4474-a109-796be0cc1544"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{role_nm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="398" y="0" width="136" height="20" uuid="16afb141-5bac-4944-a767-0e3f41d9b305"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{screen_nm}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="573" y="0" width="100" height="20" uuid="77eda5e4-c850-4f3e-9cd6-7f0f422543af"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    ($F{privilege_id}==1) ?
+    "Read" :
+   ($F{privilege_id}==2)?
+    "Write" :
+	($F{privilege_id}==3)?
+    "All" :
+    "Unknown"
+)]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="340" y="0" width="80" height="20" uuid="58bbd5c2-3f03-4f36-ac05-4522c9e78280"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="420" y="0" width="40" height="20" uuid="a2ab1adb-1a08-41ae-a2fd-95b2d7390235"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="555" y="0" width="64" height="20" uuid="2267c07c-8967-493b-bc16-8cf86f0049fe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="619" y="0" width="141" height="20" uuid="9849a912-86fe-4e0a-8b3c-8659de4732a8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
